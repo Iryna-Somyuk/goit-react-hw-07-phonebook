@@ -8,9 +8,9 @@ import {
   Btn,
 } from './PhonebookForm.styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from 'redux/contactSlice';
-import { getContacts } from 'redux/selector';
+import { selectContacts } from 'redux/selector';
 import toast, { Toaster } from 'react-hot-toast';
+import { addContact } from 'redux/operations';
 
 const schema = yup.object().shape({
   name: yup.string().required(),
@@ -23,9 +23,10 @@ const initialValues = {
 };
 
 export const PhonebookForm = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
   const handleSubmit = (values, { resetForm }) => {
+
     console.log(values);
     if (contacts.find(contact => contact.name === values.name)) {
       toast.error('Attention, this contact is already in the phonebook!', {
